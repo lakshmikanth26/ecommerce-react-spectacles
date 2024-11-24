@@ -1,0 +1,55 @@
+{
+  "products": [
+    {
+      "name": "product 1",
+      "brand": "Salt Maalat",
+      "price": 2400,
+      "maxQuantity": 2,
+      "description": "dsa",
+      "keywords": [
+        "sda"
+      ],
+      "sizes": [
+        "1"
+      ],
+      "isFeatured": true,
+      "isRecommended": false,
+      "availableColors": [
+        "#9d2020"
+      ],
+      "image":"/1732459072704-silver-maroon-full-rim-geometric-vincent-chase-livewire-vc-s14506-c5-polarized-sunglasses_14_sep148425_151377_20_sep22.jpg",
+      "quantity": 1,
+      "name_lower": "das",
+      "dateAdded": 1732460489176,
+      "imageCollection": [
+        "/1732459072704-silver-maroon-full-rim-geometric-vincent-chase-livewire-vc-s14506-c5-polarized-sunglasses_14_sep148425_151377_20_sep22.jpg"
+      ],
+      "id": "1"
+    },
+    {
+      "name": "das",
+      "brand": "Salt Maalat",
+      "price": 2400,
+      "maxQuantity": 2,
+      "description": "dsa",
+      "keywords": [
+        "sda"
+      ],
+      "sizes": [
+        "1"
+      ],
+      "isFeatured": false,
+      "isRecommended": true,
+      "availableColors": [
+        "#9d2020"
+      ],
+      "image":"/1732459072704-silver-maroon-full-rim-geometric-vincent-chase-livewire-vc-s14506-c5-polarized-sunglasses_14_sep148425_151377_20_sep22.jpg",
+      "quantity": 1,
+      "name_lower": "das",
+      "dateAdded": 1732460489176,
+      "imageCollection": [
+      ],
+      "id": "2"
+    }
+  ]
+}

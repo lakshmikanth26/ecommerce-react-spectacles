@@ -1,6 +1,6 @@
 import { useDidMount } from '@/hooks';
 import { useEffect, useState } from 'react';
-import firebase from '@/services/firebase';
+import axios from 'axios';
 
 const useRecommendedProducts = (itemsCount) => {
   const [recommendedProducts, setRecommendedProducts] = useState([]);
@@ -13,9 +13,17 @@ const useRecommendedProducts = (itemsCount) => {
       setLoading(true);
       setError('');
 
-      const docs = await firebase.getRecommendedProducts(itemsCount);
-
-      if (docs.empty) {
+      const itemsCount = 10;
+      const response = await axios.get('http://localhost:5002/products', {
+        params: {
+          isRecommended: true, 
+          _limit: itemsCount 
+        }
+      });
+      if (!response.statusText=="OK") {
+        throw new Error('Failed to fetch featured products');
+      }
+      if (response.data.length == 0) {
         if (didMount) {
           setError('No recommended products found.');
           setLoading(false);
@@ -23,9 +31,8 @@ const useRecommendedProducts = (itemsCount) => {
       } else {
         const items = [];
 
-        docs.forEach((snap) => {
-          const data = snap.data();
-          items.push({ id: snap.ref.id, ...data });
+        response.data.forEach((product) => {
+          items.push({ ...product });
         });
 
         if (didMount) {

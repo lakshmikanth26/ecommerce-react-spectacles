@@ -1,0 +1,21 @@
+1. Install yarn
+  https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable
+
+2. yarn install
+
+3. rename .env-rename file to .env
+
+4.  setup realtime database in firebase under build section
+
+6. Create a new firebase project
+    Login to your google account and create a new firebase project here
+    https://console.firebase.google.com/u/0/
+    under project settings of firebase you see configuration copy and paste in .env file
+
+7. add few products in db.json inside products
+
+terminal 1
+8. yarn start-server
+
+terminal 2
+9. yarn dev

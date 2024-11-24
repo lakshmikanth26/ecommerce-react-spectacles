@@ -19,9 +19,8 @@ const ProductList = (props) => {
   };
 
   useEffect(() => {
-    if (products.items.length === 0 || !products.lastRefKey) {
-      fetchProducts();
-    }
+    products.items = []
+    fetchProducts();
 
     window.scrollTo(0, 0);
     return () => dispatch(setLoading(false));

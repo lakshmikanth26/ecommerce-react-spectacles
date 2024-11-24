@@ -1,34 +1,27 @@
-import { useDidMount } from '@/hooks';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import firebase from '@/services/firebase';
+import axios from 'axios';
+import { useDidMount } from '@/hooks'; // Assuming this is a custom hook
 
 const useProduct = (id) => {
-  // get and check if product exists in store
-  const storeProduct = useSelector((state) => state.products.items.find((item) => item.id === id));
-
-  const [product, setProduct] = useState(storeProduct);
+  const [product, setProduct] = useState(null);  // Default to null if no product is found
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const didMount = useDidMount(true);
 
   useEffect(() => {
-    (async () => {
+    const fetchProduct = async () => {
       try {
-        if (!product || product.id !== id) {
-          setLoading(true);
-          const doc = await firebase.getSingleProduct(id);
-
-          if (doc.exists) {
-            const data = { ...doc.data(), id: doc.ref.id };
-
-            if (didMount) {
-              setProduct(data);
-              setLoading(false);
-            }
-          } else {
-            setError('Product not found.');
+        setLoading(true);  // Start loading state
+        const response = await axios.get(`http://localhost:5002/products/${id}`);
+        
+        // If product is found
+        if (response.data) {
+          if (didMount) {
+            setProduct(response.data);  // Update state with the product data
+            setLoading(false);  // End loading state
           }
+        } else {
+          setError('Product not found.');
         }
       } catch (err) {
         if (didMount) {
@@ -36,8 +29,10 @@ const useProduct = (id) => {
           setError(err?.message || 'Something went wrong.');
         }
       }
-    })();
-  }, [id]);
+    };
+
+    fetchProduct();
+  }, [id, didMount]);  // Re-run when id or didMount changes
 
   return { product, isLoading, error };
 };

@@ -46,7 +46,8 @@ const ProductItem = ({ product }) => {
               <ImageLoader
                 alt={product.name}
                 className="item-img"
-                src={product.image}
+                
+                src={`http://localhost:5002${product.image}`}
               />
             ) : <Skeleton width={50} height={30} />}
           </div>

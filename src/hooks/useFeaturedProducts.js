@@ -1,6 +1,7 @@
 import { useDidMount } from '@/hooks';
 import { useEffect, useState } from 'react';
 import firebase from '@/services/firebase';
+import axios from 'axios';
 
 const useFeaturedProducts = (itemsCount) => {
   const [featuredProducts, setFeaturedProducts] = useState([]);
@@ -12,10 +13,18 @@ const useFeaturedProducts = (itemsCount) => {
     try {
       setLoading(true);
       setError('');
-
-      const docs = await firebase.getFeaturedProducts(itemsCount);
-
-      if (docs.empty) {
+      const itemsCount = 10;
+      const response = await axios.get('http://localhost:5002/products', {
+        params: {
+          isFeatured: true, 
+          _limit: itemsCount 
+        }
+      });
+        
+      if (!response.statusText=="OK") {
+        throw new Error('Failed to fetch featured products');
+      }
+      if (response.data.length == 0) {
         if (didMount) {
           setError('No featured products found.');
           setLoading(false);
@@ -23,9 +32,8 @@ const useFeaturedProducts = (itemsCount) => {
       } else {
         const items = [];
 
-        docs.forEach((snap) => {
-          const data = snap.data();
-          items.push({ id: snap.ref.id, ...data });
+        response.data.forEach((product) => {
+          items.push({...product});
         });
 
         if (didMount) {
@@ -34,6 +42,7 @@ const useFeaturedProducts = (itemsCount) => {
         }
       }
     } catch (e) {
+      console.log(e)
       if (didMount) {
         setError('Failed to fetch featured products');
         setLoading(false);

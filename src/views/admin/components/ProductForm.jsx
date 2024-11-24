@@ -71,19 +71,17 @@ const ProductForm = ({ product, onSubmit, isLoading }) => {
   } = useFileHandler({ image: {}, imageCollection: product?.imageCollection || [] });
 
   const onSubmitForm = (form) => {
-    if (imageFile.image.file || product.imageUrl) {
+    console.log(product)
+    if (imageFile.image || product.imageUrl) {
       onSubmit({
         ...form,
         quantity: 1,
-        // due to firebase function billing policy, let's add lowercase version
-        // of name here instead in firebase functions
         name_lower: form.name.toLowerCase(),
         dateAdded: new Date().getTime(),
-        image: imageFile?.image?.file || product.imageUrl,
+        image: product?.image,
         imageCollection: imageFile.imageCollection
       });
     } else {
-      // eslint-disable-next-line no-alert
       alert('Product thumbnail image is required.');
     }
   };
